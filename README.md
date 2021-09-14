@@ -9,10 +9,17 @@ A small and simple python script to automatically renew a kerberos ticket in a t
 * Execute `pip install -r requirements.txt` to install all required packages
 * Execute `kinit` in your terminal and copy the entire password prompt (including the colon)
 
-## How to use
+## Initialization/First use:
+* Open the terminal (or tmux session) and execute `python pykmux.py` once.
+* Specify the path where the encryption key should be stored (visible when typing)
+* Add the password prompt extracted as described above using `kinit` (visible when typing)
+* Specify the password to connect with, the one that is necessary to renew the ticket (not visible when typing).
+
+Note: Do this initialization step whenever the `watch -n <time> <"command">` as shown below does not work. This is due to the expected input from the user for the program. For the first time, this command needs to be executed once for initialization purposes so set everything correctly. This always applies when the information is removed from the `~/.bashrc` file (manually). Once the initialization is done, the script can be automatically executed given a specified time as follows.
+
+## How to execute the script with `watch -n <time> <"command">`
 * Create or attach to a tmux session: `tmux new` or `tmux a -t X`
 * Open a new tmux pane: `Ctrl+B "`
 * Activate the new pane: `Ctrl+B DOWN`
-* Execute `pykmux.py` every 5 hours: `watch -n 18000 "python pykmux.py"`
-* If prompted: Enter path to folder in which the encryption key is stored as well as password prompt (visible when typing) and password (not visible when typing)
+* Execute `python pykmux.py` every 5 hours: `watch -n 18000 "python pykmux.py"`
 * (Optional) Hide the pane
