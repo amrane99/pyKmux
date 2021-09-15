@@ -20,5 +20,5 @@ A small and simple python script to automatically renew a kerberos ticket in a t
 Note: Perform this initialization step before the `watch -n <time> <"command">` command shown below since the user interaction for the initialization does not work when using the `watch` command. The initialization step is important to set everything correctly for an automated renewal of a kerberos ticket afterwards. The initialization step always applies when relevant/some information is removed/deleted. Once the initialization is done, the script can be automatically executed given a specified time as follows.
 
 ## How to execute the script with `watch -n <time> <"command">`
-* Create a tmux session: `tmux new -s <session_name>`
+* Create or attach to a tmux session: `tmux new -s <session_name>` or `tmux a -t <session_name>`
 * Execute `python pykmux.py` every 5 hours: `watch -n 18000 "python pykmux.py"`
