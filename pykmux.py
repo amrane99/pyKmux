@@ -71,6 +71,9 @@ def renew_ticket():
     # -- Load the paths file and check if it is empty -- #
     init_information = dict()
     paths_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.paths')
+    if not os.path.isfile(paths_file):
+        open(paths_file, 'a').close()
+
     with open(paths_file, 'r') as file:
         try:
             init_information = json.load(file)
@@ -101,8 +104,6 @@ def renew_ticket():
             if name[0] != '.':
                 name = '.' + name
             path = os.path.join(base, name)
-            # -- Create the directory if it does not exist -- #
-            os.makedirs(os.path.normpath(base), exist_ok=True)
             if not os.path.isfile(path):
                 open(path, 'a').close()
             
@@ -133,7 +134,8 @@ def renew_ticket():
     own_env = _parse_file(cont_path)
 
     # -- Extract kinit password prompt and password to connect -- #
-    if own_env.get('KINIT_PWD_PROMPT', None) is None or own_env.get('CONNECTION_PWD', None) is None:
+    if own_env.get('KINIT_PWD_PROMPT', None) is None or own_env.get('CONNECTION_PWD', None) is None\
+       or not os.path.isfile(key_path) or os.stat(key_path).st_size == 0:
         # -- Generate a new encryption key -- #
         key = _generate_key()
         # -- Get the kinit password prompt from the user if it is not already done once and stored in own_env -- #
